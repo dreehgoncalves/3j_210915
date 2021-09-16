@@ -40,7 +40,7 @@ servidor.post("/veiculo", (req, res, next) => {
     })
 })
 
-/* teste de conexão */
+/* teste de conexão geisa */
 
 servidor.get("/testarconexao", (req, res, next) => {
     banco.getConnection((error, conn) => {
