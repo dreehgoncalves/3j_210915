@@ -15,7 +15,7 @@ servidor.use(bodyParser.json())
 
 servidor.post("/veiculo", (req, res, next) => {
     let body = req.body;
-    const QUERY = `INSERT INTO veiculo (modelo, marca, preco_venda, proprietario) VALUES('${body.modelo}', '${body.marca}', '${body.preco}', '${body.venda}'`;
+    const QUERY = `INSERT INTO veiculo (modelo, marca, preco_venda, proprietario) VALUES('${body.modelo}', '${body.marca}', '${body.preco}', '${body.venda}', '${body.proprietario}')`;
 
     banco.getConnection((error, conn) => {
         if (error) {
@@ -44,7 +44,7 @@ servidor.post("/veiculo", (req, res, next) => {
 
 servidor.get("/veiculo/:proprietario", (req, res, next) => {
     let proprietario = req.params.proprietario;
-    const QUERY = `SELECT * FROM veiculo WHERE proprietario LIKE '%${proprietario}%' ORDER BY nome`;
+    const QUERY = `SELECT * FROM veiculo WHERE proprietario = '${proprietario}'`;
 
     banco.getConnection((error, conn) => {
         if (error) {
