@@ -103,6 +103,101 @@ servidor.delete("/veiculo/:modelo/:preco", (req, res, next) => {
     })
 })
 
+servidor.get("/veiculo/:marca", (req, res, next) => {
+    let marca = req.params.marca;
+    const QUERY = `SELECT * FROM veiculo WHERE marca = '${marca}'`;
+
+
+    banco.getConnection((error, conn) => {
+        if (error) {
+            return res.status(500).send({
+                Erro: "Não foi possível atender à solicitação"
+            })
+        }
+
+        conn.query(QUERY, (error, resultado) => {
+            conn.release()
+
+            if (error) {
+                return res.status(500).send({
+                    Erro: "Não foi possível atender à solicitação",
+                    Detalhes: error,
+                })
+            }
+
+            return res.status(200).send({
+                Mensagem: "Consulta realizada com sucesso",
+                Dados: resultado
+            })
+        })
+    })
+})
+
+servidor.get("/veiculo/:preco", (req, res, next) => {
+    let marca = req.params.preco;
+    const QUERY = `SELECT * FROM veiculo WHERE preco_venda = '${preco}'`;
+
+
+    banco.getConnection((error, conn) => {
+        if (error) {
+            return res.status(500).send({
+                Erro: "Não foi possível atender à solicitação"
+            })
+        }
+
+        conn.query(QUERY, (error, resultado) => {
+            conn.release()
+
+            if (error) {
+                return res.status(500).send({
+                    Erro: "Não foi possível atender à solicitação",
+                    Detalhes: error,
+                })
+            }
+
+            return res.status(200).send({
+                Mensagem: "Consulta realizada com sucesso",
+                Dados: resultado
+            })
+        })
+    })
+})
+
+servidor.delete("/veiculo/:", (req, res, next) => {
+    let modelo = req.params.modelo;
+    let preco = req.params.preco;
+    const QUERY = `DELETE FROM veiculo WHERE modelo = '${modelo}' AND preco_venda >= '${preco}'`;
+
+    banco.getConnection((error, conn) => {
+        if (error) {
+            return res.status(500).send({
+                messagem: "Erro no servidor"
+            })
+        }
+        conn.query(QUERY, (error, resultado) => {
+            conn.release()
+
+            if (error) {
+                return res.status(500).send({
+                    mensagem: `Não foi possível excluir o veiculo`,
+                    detalhes: error
+                })
+            }
+            if (resultado.affectedRows > 0) {
+                return res.status(200).send({
+                    mensagem: `Veículo excluído com sucesso`
+                })
+            } else {
+                return res.status(200).send({
+                    mensagem: `Veículo não existe no banco de dados`
+                })
+            }
+        })
+    })
+})
+
+
+
 /* teste de conexão geisa aaa*/
 
 servidor.get("/testarconexao", (req, res, next) => {
