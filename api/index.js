@@ -105,6 +105,8 @@ servidor.delete("/veiculo/:modelo/:preco", (req, res, next) => {
     })
 })
 
+/* GIOVANA */
+
 servidor.get("/veiculo/marca/:marca", (req, res, next) => {
     let marca = req.params.marca;
     const QUERY = `SELECT * FROM veiculo WHERE marca = '${marca}'`;
@@ -196,6 +198,8 @@ servidor.delete("/veiculo/delete/:marca", (req, res, next) => {
         })
     })
 })
+
+/* GEISA */
 
 servidor.get("/veiculo/todos/", (req, res, next) => {
     const QUERY = `SELECT * FROM veiculo ORDER BY marca`;
