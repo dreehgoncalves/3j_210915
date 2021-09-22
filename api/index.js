@@ -4,7 +4,7 @@ const mysql = require("mysql2")
 const banco = mysql.createPool({
     database: "3j_210915",
     user: "root",
-    password: "",
+    password: "minas",
     host: "localhost",
     port: "3306",
 })
@@ -103,7 +103,7 @@ servidor.delete("/veiculo/:modelo/:preco", (req, res, next) => {
     })
 })
 
-servidor.get("/veiculo/:marca", (req, res, next) => {
+servidor.get("/veiculo/marca/:marca", (req, res, next) => {
     let marca = req.params.marca;
     const QUERY = `SELECT * FROM veiculo WHERE marca = '${marca}'`;
 
@@ -163,10 +163,9 @@ servidor.get("/veiculo/:preco", (req, res, next) => {
     })
 })
 
-servidor.delete("/veiculo/:", (req, res, next) => {
-    let modelo = req.params.modelo;
-    let preco = req.params.preco;
-    const QUERY = `DELETE FROM veiculo WHERE modelo = '${modelo}' AND preco_venda >= '${preco}'`;
+servidor.delete("/veiculo/delete/:marca", (req, res, next) => {
+    let modelo = req.params.marca;
+    const QUERY = `DELETE FROM veiculo WHERE marca = '${marca}'`;
 
     banco.getConnection((error, conn) => {
         if (error) {
@@ -196,7 +195,34 @@ servidor.delete("/veiculo/:", (req, res, next) => {
     })
 })
 
+servidor.get("/veiculo/todos/", (req, res, next) => {
+    const QUERY = `SELECT * FROM veiculo ORDER BY marca`;
 
+
+    banco.getConnection((error, conn) => {
+        if (error) {
+            return res.status(500).send({
+                Erro: "Não foi possível atender à solicitação"
+            })
+        }
+
+        conn.query(QUERY, (error, resultado) => {
+            conn.release()
+
+            if (error) {
+                return res.status(500).send({
+                    Erro: "Não foi possível atender à solicitação",
+                    Detalhes: error,
+                })
+            }
+
+            return res.status(200).send({
+                Mensagem: "Consulta realizada com sucesso",
+                Dados: resultado
+            })
+        })
+    })
+})
 
 /* teste de conexão geisa aaa*/
 
