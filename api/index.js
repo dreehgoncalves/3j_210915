@@ -13,6 +13,8 @@ const bodyParser = require('body-parser')
 servidor.use(bodyParser.urlencoded({ extended: false }))
 servidor.use(bodyParser.json())
 
+/* ANDRESSA */
+
 servidor.post("/veiculo", (req, res, next) => {
     let body = req.body;
     const QUERY = `INSERT INTO veiculo (modelo, marca, preco_venda, proprietario) VALUES('${body.modelo}', '${body.marca}', '${body.preco}', '${body.proprietario}')`;
@@ -102,6 +104,8 @@ servidor.delete("/veiculo/:modelo/:preco", (req, res, next) => {
         })
     })
 })
+
+/* GIOVANA */
 
 servidor.get("/veiculo/:marca", (req, res, next) => {
     let marca = req.params.marca;
@@ -196,9 +200,10 @@ servidor.delete("/veiculo/:", (req, res, next) => {
     })
 })
 
+/* GEISA */
 
 
-/* teste de conexão geisa aaa*/
+/* teste de conexão*/
 
 servidor.get("/testarconexao", (req, res, next) => {
     banco.getConnection((error, conn) => {
