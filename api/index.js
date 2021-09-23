@@ -43,36 +43,36 @@ servidor.post("/veiculo", (req, res, next) => {
     })
 })
 
-servidor.get("/veiculo/:proprietario", (req, res, next) => {
+servidor.get("/veiculo/andressa/:proprietario", (req, res, next) => {
     let proprietario = req.params.proprietario;
     const QUERY = `SELECT * FROM veiculo WHERE proprietario = '${proprietario}'`;
 
     banco.getConnection((error, conn) => {
         if (error) {
             return res.status(500).send({
-                Erro: "Não foi possível atender à solicitação"
-            })
+                Erro: "Não foi possível atender à solicitação",
+            });
         }
 
         conn.query(QUERY, (error, resultado) => {
-            conn.release()
+            conn.release();
 
             if (error) {
                 return res.status(500).send({
                     Erro: "Não foi possível atender à solicitação",
                     Detalhes: error,
-                })
+                });
             }
 
             return res.status(200).send({
                 Mensagem: "Consulta realizada com sucesso",
-                Dados: resultado
-            })
-        })
-    })
-})
+                Dados: resultado,
+            });
+        });
+    });
+});
 
-servidor.delete("/veiculo/:modelo/:preco", (req, res, next) => {
+servidor.delete("/veiculo/andressa/:modelo/:preco", (req, res, next) => {
     let modelo = req.params.modelo;
     let preco = req.params.preco;
     const QUERY = `DELETE FROM veiculo WHERE modelo = '${modelo}' AND preco_venda >= '${preco}'`;
@@ -107,76 +107,76 @@ servidor.delete("/veiculo/:modelo/:preco", (req, res, next) => {
 
 /* GIOVANA */
 
-servidor.get("/veiculo/marca/:marca", (req, res, next) => {
+servidor.get("/veiculo/giovana/:marca", (req, res, next) => {
     let marca = req.params.marca;
     const QUERY = `SELECT * FROM veiculo WHERE marca = '${marca}'`;
 
-
     banco.getConnection((error, conn) => {
         if (error) {
             return res.status(500).send({
-                Erro: "Não foi possível atender à solicitação"
-            })
+                Erro: "Não foi possível atender à solicitação",
+            });
         }
 
         conn.query(QUERY, (error, resultado) => {
-            conn.release()
+            conn.release();
 
             if (error) {
                 return res.status(500).send({
                     Erro: "Não foi possível atender à solicitação",
                     Detalhes: error,
-                })
+                });
             }
 
             return res.status(200).send({
                 Mensagem: "Consulta realizada com sucesso",
-                Dados: resultado
-            })
-        })
-    })
-})
+                Dados: resultado,
+            });
+        });
+    });
+});
 
-servidor.get("/veiculo/:preco", (req, res, next) => {
+servidor.get("/veiculo/giovana/:preco", (req, res, next) => {
     let marca = req.params.preco;
     const QUERY = `SELECT * FROM veiculo WHERE preco_venda = '${preco}'`;
 
-
     banco.getConnection((error, conn) => {
         if (error) {
             return res.status(500).send({
-                Erro: "Não foi possível atender à solicitação"
-            })
+                Erro: "Não foi possível atender à solicitação",
+            });
         }
 
         conn.query(QUERY, (error, resultado) => {
-            conn.release()
+            conn.release();
 
             if (error) {
                 return res.status(500).send({
                     Erro: "Não foi possível atender à solicitação",
                     Detalhes: error,
-                })
+                });
             }
 
             return res.status(200).send({
                 Mensagem: "Consulta realizada com sucesso",
-                Dados: resultado
-            })
-        })
-    })
-})
+                Dados: resultado,
+            });
+        });
+    });
+});
 
-servidor.delete("/veiculo/delete/:marca", (req, res, next) => {
-    let modelo = req.params.marca;
+servidor.delete("/veiculo/giovana/:marca", (req, res, next) => {
+    let marca = req.params.marca;
     const QUERY = `DELETE FROM veiculo WHERE marca = '${marca}'`;
 
     banco.getConnection((error, conn) => {
         if (error) {
             return res.status(500).send({
-                messagem: "Erro no servidor"
+                messagem: "Erro no servidor",
+                query: QUERY
             })
         }
+
         conn.query(QUERY, (error, resultado) => {
             conn.release()
 
@@ -192,7 +192,8 @@ servidor.delete("/veiculo/delete/:marca", (req, res, next) => {
                 })
             } else {
                 return res.status(200).send({
-                    mensagem: `Veículo não existe no banco de dados`
+                    mensagem: `Veículo não existe no banco de dados`,
+                    query: QUERY,
                 })
             }
         })
@@ -201,7 +202,7 @@ servidor.delete("/veiculo/delete/:marca", (req, res, next) => {
 
 /* GEISA */
 
-servidor.get("/veiculo/todos/", (req, res, next) => {
+servidor.get("/veiculo/geisa/todos/", (req, res, next) => {
     const QUERY = `SELECT * FROM veiculo ORDER BY marca`;
 
 
@@ -229,6 +230,37 @@ servidor.get("/veiculo/todos/", (req, res, next) => {
         })
     })
 })
+
+servidor.get("/veiculo/geisa/todos/", (req, res, next) => {
+    const QUERY = `SELECT * FROM veiculo ORDER BY marca`;
+
+    banco.getConnection((error, conn) => {
+        if (error) {
+            return res.status(500).send({
+                Erro: "Não foi possível atender à solicitação",
+            });
+        }
+
+        conn.query(QUERY, (error, resultado) => {
+            conn.release();
+
+            if (error) {
+                return res.status(500).send({
+                    Erro: "Não foi possível atender à solicitação",
+                    Detalhes: error,
+                });
+            }
+
+            return res.status(200).send({
+                Mensagem: "Consulta realizada com sucesso",
+                Dados: resultado,
+            });
+        });
+    });
+});
+
+
+
 
 /* teste de conexão*/
 
