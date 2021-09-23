@@ -107,7 +107,7 @@ servidor.delete("/veiculo/andressa/:modelo/:preco", (req, res, next) => {
 
 /* GIOVANA */
 
-servidor.get("/veiculo/giovana/:marca", (req, res, next) => {
+servidor.get("/veiculo/giovana/marca/:marca", (req, res, next) => {
     let marca = req.params.marca;
     const QUERY = `SELECT * FROM veiculo WHERE marca = '${marca}'`;
 
@@ -136,9 +136,9 @@ servidor.get("/veiculo/giovana/:marca", (req, res, next) => {
     });
 });
 
-servidor.get("/veiculo/giovana/:preco", (req, res, next) => {
-    let marca = req.params.preco;
-    const QUERY = `SELECT * FROM veiculo WHERE preco_venda = '${preco}'`;
+servidor.get("/veiculo/giovana/preco/:preco", (req, res, next) => {
+    let preco = req.params.preco;
+    const QUERY = `SELECT * FROM veiculo WHERE preco_venda >= '${preco}'`;
 
     banco.getConnection((error, conn) => {
         if (error) {
@@ -159,7 +159,7 @@ servidor.get("/veiculo/giovana/:preco", (req, res, next) => {
 
             return res.status(200).send({
                 Mensagem: "Consulta realizada com sucesso",
-                Dados: resultado,
+                Dados: resultado
             });
         });
     });
@@ -231,8 +231,9 @@ servidor.get("/veiculo/geisa/todos/", (req, res, next) => {
     })
 })
 
-servidor.get("/veiculo/geisa/todos/", (req, res, next) => {
-    const QUERY = `SELECT * FROM veiculo ORDER BY marca`;
+servidor.delete("/veiculo/geisa/:id", (req, res, next) => {
+    let id = req.params.id;
+    const QUERY = `DELETE FROM veiculo WHERE id = '${id}'`;
 
     banco.getConnection((error, conn) => {
         if (error) {
@@ -252,8 +253,7 @@ servidor.get("/veiculo/geisa/todos/", (req, res, next) => {
             }
 
             return res.status(200).send({
-                Mensagem: "Consulta realizada com sucesso",
-                Dados: resultado,
+                Mensagem: "Deletado com sucesso"
             });
         });
     });
