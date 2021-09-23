@@ -31,8 +31,7 @@ servidor.post("/veiculo", (req, res, next) => {
 
             if (error) {
                 return res.status(500).send({
-                    Mensagem: "Erro no servidor",
-                    Detalhes: error
+                    Mensagem: "Erro no servidor"
                 })
             }
 
@@ -51,26 +50,25 @@ servidor.get("/veiculo/andressa/:proprietario", (req, res, next) => {
         if (error) {
             return res.status(500).send({
                 Erro: "Não foi possível atender à solicitação",
-            });
+            })
         }
 
         conn.query(QUERY, (error, resultado) => {
-            conn.release();
+            conn.release()
 
             if (error) {
                 return res.status(500).send({
                     Erro: "Não foi possível atender à solicitação",
-                    Detalhes: error,
-                });
+                })
             }
 
             return res.status(200).send({
                 Mensagem: "Consulta realizada com sucesso",
-                Dados: resultado,
-            });
-        });
-    });
-});
+                Dados: resultado
+            })
+        })
+    })
+})
 
 servidor.delete("/veiculo/andressa/:modelo/:preco", (req, res, next) => {
     let modelo = req.params.modelo;
@@ -88,8 +86,7 @@ servidor.delete("/veiculo/andressa/:modelo/:preco", (req, res, next) => {
 
             if (error) {
                 return res.status(500).send({
-                    mensagem: `Não foi possível excluir o veiculo`,
-                    detalhes: error
+                    mensagem: `Não foi possível excluir o veiculo`
                 })
             }
             if (resultado.affectedRows > 0) {
@@ -115,26 +112,25 @@ servidor.get("/veiculo/giovana/marca/:marca", (req, res, next) => {
         if (error) {
             return res.status(500).send({
                 Erro: "Não foi possível atender à solicitação",
-            });
+            })
         }
 
         conn.query(QUERY, (error, resultado) => {
-            conn.release();
+            conn.release()
 
             if (error) {
                 return res.status(500).send({
                     Erro: "Não foi possível atender à solicitação",
-                    Detalhes: error,
-                });
+                })
             }
 
             return res.status(200).send({
                 Mensagem: "Consulta realizada com sucesso",
-                Dados: resultado,
-            });
-        });
-    });
-});
+                Dados: resultado
+            })
+        })
+    })
+})
 
 servidor.get("/veiculo/giovana/preco/:preco", (req, res, next) => {
     let preco = req.params.preco;
@@ -144,36 +140,6 @@ servidor.get("/veiculo/giovana/preco/:preco", (req, res, next) => {
         if (error) {
             return res.status(500).send({
                 Erro: "Não foi possível atender à solicitação",
-            });
-        }
-
-        conn.query(QUERY, (error, resultado) => {
-            conn.release();
-
-            if (error) {
-                return res.status(500).send({
-                    Erro: "Não foi possível atender à solicitação",
-                    Detalhes: error,
-                });
-            }
-
-            return res.status(200).send({
-                Mensagem: "Consulta realizada com sucesso",
-                Dados: resultado
-            });
-        });
-    });
-});
-
-servidor.delete("/veiculo/giovana/:marca", (req, res, next) => {
-    let marca = req.params.marca;
-    const QUERY = `DELETE FROM veiculo WHERE marca = '${marca}'`;
-
-    banco.getConnection((error, conn) => {
-        if (error) {
-            return res.status(500).send({
-                messagem: "Erro no servidor",
-                query: QUERY
             })
         }
 
@@ -182,8 +148,35 @@ servidor.delete("/veiculo/giovana/:marca", (req, res, next) => {
 
             if (error) {
                 return res.status(500).send({
-                    mensagem: `Não foi possível excluir o veiculo`,
-                    detalhes: error
+                    Erro: "Não foi possível atender à solicitação",
+                })
+            }
+
+            return res.status(200).send({
+                Mensagem: "Consulta realizada com sucesso",
+                Dados: resultado
+            })
+        })
+    })
+})
+
+servidor.delete("/veiculo/giovana/:marca", (req, res, next) => {
+    let marca = req.params.marca;
+    const QUERY = `DELETE FROM veiculo WHERE marca = '${marca}'`;
+
+    banco.getConnection((error, conn) => {
+        if (error) {
+            return res.status(500).send({
+                messagem: "Erro no servidor"
+            })
+        }
+
+        conn.query(QUERY, (error, resultado) => {
+            conn.release()
+
+            if (error) {
+                return res.status(500).send({
+                    mensagem: `Não foi possível excluir o veiculo`
                 })
             }
             if (resultado.affectedRows > 0) {
@@ -192,8 +185,7 @@ servidor.delete("/veiculo/giovana/:marca", (req, res, next) => {
                 })
             } else {
                 return res.status(200).send({
-                    mensagem: `Veículo não existe no banco de dados`,
-                    query: QUERY,
+                    mensagem: `Veículo não existe no banco de dados`
                 })
             }
         })
@@ -219,7 +211,6 @@ servidor.get("/veiculo/geisa/todos/", (req, res, next) => {
             if (error) {
                 return res.status(500).send({
                     Erro: "Não foi possível atender à solicitação",
-                    Detalhes: error,
                 })
             }
 
@@ -239,26 +230,51 @@ servidor.delete("/veiculo/geisa/:id", (req, res, next) => {
         if (error) {
             return res.status(500).send({
                 Erro: "Não foi possível atender à solicitação",
-            });
+            })
         }
 
         conn.query(QUERY, (error, resultado) => {
-            conn.release();
+            conn.release()
 
             if (error) {
                 return res.status(500).send({
                     Erro: "Não foi possível atender à solicitação",
-                    Detalhes: error,
-                });
+                })
             }
 
             return res.status(200).send({
                 Mensagem: "Deletado com sucesso"
-            });
-        });
-    });
-});
+            })
+        })
+    })
+})
 
+servidor.patch("/veiculo/geisa/:id", (req, res, next) => {
+    let id = req.params.id;
+    let body = req.body;
+    const QUERY = `UPDATE veiculo SET modelo = '${body.modelo}', marca = '${body.marca}', preco_venda = '${body.preco}', proprietario = '${body.proprietario}' WHERE id = ${id}`;
+
+    banco.getConnection((error, conn) => {
+        if (error) {
+            return res.status(500).send({
+                messagem: "Erro no servidor",
+                detalhes: error,
+            })
+        }
+        conn.query(QUERY, (error, resultado) => {
+            conn.release()
+
+            if (error) {
+                return res.status(500).send({
+                    mensagem: `Erro ao atualizar o cadastro`,
+                })
+            }
+            return res.status(200).send({
+                mensagem: `Veiculo atualizado com sucesso`,
+            })
+        })
+    })
+})
 
 
 
